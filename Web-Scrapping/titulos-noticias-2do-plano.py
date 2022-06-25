@@ -2,7 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import pandas as pd
+from datetime import datetime
+import os
+import sys
 
+
+ruta_ejecutable = os.path.dirname(sys.executable)
+
+fecha_hoy = datetime.now()
+#MMDDYYYY
+mes_dia_ano = fecha_hoy.strftime("%m%d%y")
 
 website = "https://www.thesun.co.uk/sport/football/"
 path = (r"C:\Users\marcos.sandovalr\Downloads\chromedriver_win32\chromedriver.exe")
@@ -31,9 +40,8 @@ for contenedor in contenedores:
 
 
 mi_diccionario = {'titulo':titulos, 'subtitulo':subtitulos, 'link': links}
-
-
 df_noticias = pd.DataFrame(mi_diccionario)
-df_noticias.to_csv('noticias-2do-plano.csv')
-
+nombre_archivo = f'noticias-{mes_dia_ano}.csv'
+ruta_final = os.path.join(ruta_ejecutable,nombre_archivo)
+df_noticias.to_csv(ruta_final)
 driver.quit()
